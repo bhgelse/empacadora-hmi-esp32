@@ -1,0 +1,20 @@
+digraph S { pad=0.2; rankdir=TB; bgcolor="white"; nodesep=0.55; ranksep=0.7;
+ node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=12, fillcolor="#eef2f6", color="#5d6b77", penwidth=1.4, margin="0.16,0.09"];
+ edge [fontname="Helvetica", fontsize=10, color="#3a4651"];
+ IDLE [label="DETENIDA", fillcolor="#e3e7eb"];
+ LL [label="LLENANDO\ngrueso + fino"];
+ LF [label="LLENANDO\nsolo fino"];
+ LN [label="LLENO\nespera el pedal", fillcolor="#fbf1d3"];
+ DE [label="DESCARGANDO", fillcolor="#d7efe0"];
+ ALM [label="PARO / ALARMA\n(desde cualquier estado)\ncierra todo de inmediato", fillcolor="#f6c9cb", color="#e5282d", penwidth=2];
+ {rank=same; IDLE; LL; LF}
+ {rank=same; ALM; DE; LN}
+ IDLE -> LL [label=" INICIO "];
+ LL -> LF [label=" peso ≥ corte − cola G "];
+ LF -> LN [label=" peso ≥ objetivo − cola F "];
+ LN -> DE [label=" pedal pisado "];
+ DE -> IDLE [label=" vacío y tiempo mínimo\n (ciclo único) "];
+ DE -> LL [label=" vacío (INICIO sostenido)\n reinicia el llenado ", constraint=false];
+ IDLE -> LN [label=" VACIAR BALDE ", style=dashed, constraint=false];
+ ALM -> IDLE [label=" reconocer ", constraint=false];
+}

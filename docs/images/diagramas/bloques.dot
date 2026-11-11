@@ -1,0 +1,22 @@
+digraph G { pad=0.2; rankdir=TB; bgcolor="white"; nodesep=0.5; ranksep=0.6;
+ node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=12, fillcolor="#eef2f6", color="#5d6b77", penwidth=1.4, margin="0.16,0.09"];
+ edge [fontname="Helvetica", fontsize=10, color="#5d6b77"];
+ cel [label="Celdas de carga\n(simulador en banco)"];
+ ind [label="Indicador\nMettler Toledo IND236", fillcolor="#dfe9f5"];
+ mx  [label="Convertidor\nMAX3232"];
+ ent [label="Entradas físicas\npedal · inicio\nparo · reconocer"];
+ esp [label="ESP32\ncontrol en tiempo real", fillcolor="#d7efe0", color="#1c8a3e", penwidth=2];
+ sal [label="Salidas: relés / electroválvulas\ngrueso · fino · descarga\n+ LEDs rojo / amarillo / verde"];
+ pc  [label="PC con navegador (Chrome/Edge)\nHMI web, una conexión\npor empacadora", fillcolor="#fbf1d3"];
+ fut [label="Evolución prevista:\nMicro820 + HMI industrial\n+ EKI-1524 (serial a Ethernet)", style="rounded,dashed", fillcolor="white"];
+ {rank=same; cel; ind; mx}
+ {rank=same; ent; esp; sal}
+ {rank=same; pc; fut}
+ cel -> ind [label=" mV/V "];
+ ind -> mx [label=" RS-232\n 19200 8N1 "];
+ mx -> esp [label=" UART1 (TTL) "];
+ ent -> esp;
+ esp -> sal;
+ esp -> pc [dir=both, label=" USB-serial 115200\n JSON por línea "];
+ pc -> fut [style=dashed, arrowhead=none];
+}

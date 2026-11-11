@@ -1,0 +1,3 @@
+# Opcional: tick de FreeRTOS a 1 ms (mejor resolución en los tiempos de control).
+# Si ya tienes un sdkconfig.<env> generado, bórralo para que se regenere con este archivo.
+CONFIG_FREERTOS_HZ=1000
